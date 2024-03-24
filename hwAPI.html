@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+	<title>API FUN</title>
+	<meta charset="utf-8"/>
+    <style>
+        .poster{
+            width: 240px;
+        }
+    </style>
+	<script>
+		function loadData() {
+            theDate = document.getElementById('date').value;
+            url = "https://www.whenisthenextmcufilm.com/api?date=" + theDate
+            fetch(url)
+                .then(res => res.text())
+                .then (data => 
+	            {
+                    console.log(data);
+                    theData = JSON.parse(data);
+                    document.getElementById("theData").innerHTML = 
+                    "Title: " + theData.title + "<br><br>Description: " + theData.overview
+                    + "<br><br>Type: " + theData.type
+                    + "<br><br>Release Date: " + theData.release_date 
+                    + "<br><br>Days Until: " + theData.days_until
+                    + "<br><br>Poster: <br><img class=poster src='" + theData.poster_url + "'>";	
+	            })
+	        .catch (error => console.log(error))
+		}  // end load data
+	</script>
+</head>
+<body>
+
+	<h1>When is the next MCU film?</h1>
+	<form>Enter a date: <input type = 'text' name = 'date' id="date">
+        <br>(Format: 2023-12-31)
+        <br>
+		<br><input type = "button" value = "Go!"
+			onclick="loadData()">
+	</form>
+    <br>
+	<div id="theData">&nbsp;</div>
+</body>
+</html>
